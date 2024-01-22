@@ -1,13 +1,14 @@
 import { gql } from "graphql-tag";
 
 export const GET_TRAVELS = gql`
-  query {
-    travels {
+  query ($offset: Int, $limit: Int) {
+    travels(offset: $offset, limit: $limit) {
       items {
         id
         name
         slug
         description
+        image
         days
         nights
       }

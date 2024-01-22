@@ -1,7 +1,7 @@
 import { gql } from "graphql-tag";
 
 export const LOGIN = gql`
-  mutation login($loginInput: LoginInput!) {
+  mutation ($loginInput: LoginInput!) {
     login(loginInput: $loginInput) {
       accessToken
     }
@@ -9,7 +9,7 @@ export const LOGIN = gql`
 `;
 
 export const CREATE_TRAVEL = gql`
-  mutation createTravel($createTravelInput: CreateTravelInput) {
+  mutation ($createTravelInput: CreateTravelInput) {
     createTravel(createTravelInput: $createTravelInput) {
       id
     }
