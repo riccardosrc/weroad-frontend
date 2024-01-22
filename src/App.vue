@@ -2,7 +2,9 @@
   <v-app>
     <v-main>
       <TheHeader />
-      <router-view />
+      <div class="w-75 mx-auto">
+        <router-view />
+      </div>
     </v-main>
   </v-app>
 </template>
