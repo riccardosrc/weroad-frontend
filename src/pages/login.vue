@@ -39,6 +39,7 @@ import { useRouter } from "vue-router";
 import { LOGIN } from "@/graphql/mutations";
 import { LoginInput } from "@/types/dto/login-input";
 import { LoginRes } from "@/types/models/login-res.interface";
+import { PropertyWrapper } from "@/types/generics/property-wrapper.type";
 
 const router = useRouter();
 
@@ -51,7 +52,7 @@ const {
   mutate: login,
   loading,
   error,
-} = useMutation<LoginRes>(LOGIN, () => ({
+} = useMutation<PropertyWrapper<"login", LoginRes>>(LOGIN, () => ({
   variables: {
     loginInput: credentials,
   },
