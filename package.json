@@ -14,9 +14,11 @@
     "core-js": "^3.34.0",
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
+    "jwt-decode": "^4.0.0",
     "roboto-fontface": "*",
     "vue": "^3.3.0",
-    "vuetify": "^3.0.0"
+    "vuetify": "^3.0.0",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@babel/types": "^7.23.0",
