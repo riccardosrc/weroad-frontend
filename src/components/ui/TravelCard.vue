@@ -9,13 +9,11 @@
             <v-icon>mdi-calendar</v-icon>
             {{ travel.days }} days
           </h3>
-          <h3 v-if="travel.cheapestTour">
-            Starting from {{ travel.cheapestTour }}€
-          </h3>
+          <h3 v-if="travel.cheapestTour">From {{ travel.cheapestTour }}€</h3>
           <h3 v-else>N/A</h3>
         </v-row>
         <v-row justify="space-between" class="card-row">
-          <v-btn w variant="text">Available Dates</v-btn>
+          <v-btn w variant="text">Book Now</v-btn>
           <v-btn variant="flat" color="primary" :to="travelDetailRoute"
             >Details</v-btn
           >
