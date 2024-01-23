@@ -9,11 +9,13 @@
             <v-icon>mdi-calendar</v-icon>
             {{ travel.days }} days
           </h3>
-          <h3>Starting from 900$</h3>
+          <h3>Starting from 999€</h3>
         </v-row>
         <v-row justify="space-between" class="card-row">
           <v-btn w variant="text">Available Dates</v-btn>
-          <v-btn variant="flat" color="primary">Details</v-btn>
+          <v-btn variant="flat" color="primary" :to="travelDetailRoute"
+            >Details</v-btn
+          >
         </v-row>
       </v-container>
     </v-card-text>
@@ -22,8 +24,10 @@
 
 <script setup lang="ts">
 import { Travel } from "@/types/models/travel.interface";
+import { computed } from "vue";
 
 const { travel } = defineProps<{ travel: Travel }>();
+const travelDetailRoute = computed(() => `/travels/${travel.slug}`);
 </script>
 
 <style scoped>

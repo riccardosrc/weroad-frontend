@@ -7,10 +7,12 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ImageWithText: typeof import('./src/components/ui/ImageWithText.vue')['default']
     LoadingSpinner: typeof import('./src/components/ui/LoadingSpinner.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheHeader: typeof import('./src/components/layout/TheHeader.vue')['default']
     TravelCard: typeof import('./src/components/ui/TravelCard.vue')['default']
+    TravelInformationCard: typeof import('./src/components/ui/TravelInformationCard.vue')['default']
   }
 }

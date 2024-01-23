@@ -1,3 +1,5 @@
+import { Tour } from "./tour.interface";
+
 export interface Travel {
   id: string;
   name: string;
@@ -6,7 +8,10 @@ export interface Travel {
   image: string;
   days: number;
   nights: number;
+  cheapestTour: number;
+  firstAvailableDate: Date;
   mood: TravelMood;
+  tours: Tour[];
 }
 
 export interface TravelMood {

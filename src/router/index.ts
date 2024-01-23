@@ -20,6 +20,12 @@ const router = createRouter({
       component: () => import("@/pages/travels/travels.vue"),
     },
     {
+      path: "/travels/:slug",
+      name: "travel",
+      props: true,
+      component: () => import("@/pages/travels/travel.vue"),
+    },
+    {
       path: "/tours",
       name: "tours",
       component: () => import("@/pages/tours/tours.vue"),
