@@ -3,6 +3,19 @@ import {
   createHttpLink,
   InMemoryCache,
 } from "@apollo/client/core";
+import { setContext } from "@apollo/client/link/context";
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem("accessToken");
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  };
+});
 
 export class ApolloClientSetup {
   static init() {
@@ -16,7 +29,7 @@ export class ApolloClientSetup {
 
     // Create the apollo client
     const apolloClient = new ApolloClient({
-      link: httpLink,
+      link: authLink.concat(httpLink),
       cache,
     });
 
