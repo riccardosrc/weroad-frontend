@@ -49,7 +49,6 @@ import { ref } from "vue";
 import { GET_TRAVEL_BY_SLUG } from "@/graphql/queries";
 import LoadingSpinner from "@/components/ui/LoadingSpinner.vue";
 import { PropertyWrapper } from "@/types/generics/property-wrapper.type";
-import { watch } from "vue";
 import ImageWithText from "@/components/ui/ImageWithText.vue";
 import TravelInformationCard from "@/components/ui/TravelInformationCard.vue";
 import { computed } from "vue";
@@ -57,22 +56,16 @@ import { computed } from "vue";
 const { slug } = defineProps<{ slug: string }>();
 const travel = ref<Travel>();
 
-const { result, loading, error } = useQuery<
+const { loading, error, onResult } = useQuery<
   PropertyWrapper<"travelBySlug", Travel>
 >(GET_TRAVEL_BY_SLUG, { slug });
 
-const setResult = () => {
-  if (result.value) {
-    console.log(result.value);
-    travel.value = result.value.travelBySlug;
-  }
-};
+onResult(({ data }) => {
+  console.log(data);
+  travel.value = data?.travelBySlug ?? undefined;
+});
 
 const daysNightsLabel = computed(() => {
   return `${travel.value?.days} / ${travel.value?.nights}`;
-});
-
-watch(result, () => {
-  setResult();
 });
 </script>

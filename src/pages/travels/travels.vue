@@ -26,7 +26,6 @@ import { GET_TRAVELS } from "@/graphql/queries";
 import { PaginatedRes } from "@/types/generics/paginated-res.interface";
 import { Travel } from "@/types/models/travel.interface";
 import { ref } from "vue";
-import { watch } from "vue";
 import { PropertyWrapper } from "@/types/generics/property-wrapper.type";
 
 type GetTravelsType = PropertyWrapper<"travels", PaginatedRes<Travel>>;
@@ -36,7 +35,7 @@ const page = ref(1);
 const totalPages = ref(0);
 const pageSize = ref(9);
 
-const { result, loading, error } = useQuery<GetTravelsType>(
+const { loading, error, onResult } = useQuery<GetTravelsType>(
   GET_TRAVELS,
   () => ({
     offset: (page.value - 1) * pageSize.value,
@@ -44,16 +43,15 @@ const { result, loading, error } = useQuery<GetTravelsType>(
   })
 );
 
-const setResults = () => {
-  if (result.value) {
-    console.log(result.value);
-    const { items, totalCount } = result.value.travels;
-    totalPages.value = Math.ceil(totalCount / pageSize.value);
-    travels.value = items;
+onResult(({ data }) => {
+  console.log(data);
+  if (!data) {
+    travels.value = [];
+    totalPages.value = 0;
+    return;
   }
-};
-
-watch(result, () => {
-  setResults();
+  const { items, totalCount } = data.travels;
+  totalPages.value = Math.ceil(totalCount / pageSize.value);
+  travels.value = items;
 });
 </script>
