@@ -17,17 +17,17 @@ const router = createRouter({
     {
       path: "/travels",
       name: "travels",
-      component: () => import("@/pages/travels.vue"),
+      component: () => import("@/pages/travels/travels.vue"),
     },
     {
       path: "/tours",
       name: "tours",
-      component: () => import("@/pages/tours.vue"),
+      component: () => import("@/pages/tours/tours.vue"),
     },
     {
       path: "/login",
       name: "login",
-      component: () => import("@/pages/login.vue"),
+      component: () => import("@/pages/auth/login.vue"),
     },
     {
       path: "/:notFound(.*)",
