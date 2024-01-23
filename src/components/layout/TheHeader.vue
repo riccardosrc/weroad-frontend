@@ -4,7 +4,7 @@
       <v-row justify="space-between">
         <v-toolbar-title color="background">WeRoad</v-toolbar-title>
         <div>
-          <v-btn color="background" to="/"> Travels </v-btn>
+          <v-btn color="background" to="/travels"> Travels </v-btn>
           <v-btn color="background" to="/tours"> Tours </v-btn>
         </div>
         <v-spacer></v-spacer>
