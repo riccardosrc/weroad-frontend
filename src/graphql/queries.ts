@@ -41,3 +41,25 @@ export const GET_TRAVEL_BY_SLUG = gql`
     }
   }
 `;
+
+export const GET_TOURS = gql`
+  query ($offset: Int, $limit: Int) {
+    tours(offset: $offset, limit: $limit) {
+      items {
+        id
+        name
+        price
+        startDate
+        endDate
+        travel {
+          id
+          name
+          slug
+          days
+          nights
+        }
+      }
+      totalCount
+    }
+  }
+`;
