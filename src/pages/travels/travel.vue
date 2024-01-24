@@ -11,12 +11,7 @@
         <TravelInformationCard
           icon="mdi-calendar"
           title="First Departure"
-          :text="
-            new Date(travel.firstAvailableDate).toLocaleDateString('en-US', {
-              month: 'long',
-              day: 'numeric',
-            })
-          "
+          :text="firstAvailableDateLabel"
         />
         <TravelInformationCard
           icon="mdi-theme-light-dark"
@@ -26,7 +21,7 @@
         <TravelInformationCard
           title="Starting From"
           icon="mdi-currency-eur"
-          :text="travel.cheapestTour.toString()"
+          :text="cheapestTourLabel"
         />
       </v-row>
       <v-row class="mt-6">
@@ -67,5 +62,18 @@ onResult(({ data }) => {
 
 const daysNightsLabel = computed(() => {
   return `${travel.value?.days} / ${travel.value?.nights}`;
+});
+
+const firstAvailableDateLabel = computed(() => {
+  return travel.value?.firstAvailableDate
+    ? new Date(travel.value.firstAvailableDate).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+      })
+    : "N/A";
+});
+
+const cheapestTourLabel = computed(() => {
+  return travel.value?.cheapestTour?.toString() ?? "N/A";
 });
 </script>
