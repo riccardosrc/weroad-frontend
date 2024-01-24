@@ -1,10 +1,22 @@
 <template>
-  <h1 class="mt-4">Explore our travels.</h1>
-  <h2 class="mb-4">Live our experiences.</h2>
+  <v-container>
+    <v-row justify="space-between" align="center">
+      <div>
+        <h1 class="mt-4">Explore our travels.</h1>
+        <h2 class="mb-4">Live our experiences.</h2>
+      </div>
+      <v-btn
+        icon="mdi-plus"
+        color="secondary"
+        to="/travels/config"
+        v-if="store.getters[authGetters.isAuth]"
+      ></v-btn>
+    </v-row>
+  </v-container>
   <v-responsive>
     <LoadingSpinner v-if="loading" />
     <v-container v-else-if="travels.length > 0">
-      <v-row justify="space-between">
+      <v-row justify="start">
         <v-col sm="4" v-for="travel in travels" :key="travel.id" class="g-1">
           <TravelCard :travel="travel"></TravelCard>
         </v-col>
@@ -27,6 +39,9 @@ import { PaginatedRes } from "@/types/generics/paginated-res.interface";
 import { Travel } from "@/types/models/travel.interface";
 import { ref } from "vue";
 import { PropertyWrapper } from "@/types/generics/property-wrapper.type";
+import { useStore } from "vuex";
+import { StoreState } from "@/store";
+import { authGetters } from "@/store/modules/auth";
 
 type GetTravelsType = PropertyWrapper<"travels", PaginatedRes<Travel>>;
 
@@ -34,6 +49,7 @@ const travels = ref<Travel[]>([]);
 const page = ref(1);
 const totalPages = ref(0);
 const pageSize = ref(9);
+const store = useStore<StoreState>();
 
 const { loading, error, onResult } = useQuery<GetTravelsType>(
   GET_TRAVELS,

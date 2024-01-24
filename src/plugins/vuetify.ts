@@ -19,7 +19,7 @@ const lightTheme: ThemeDefinition = {
     "on-primary": colors.shades.white,
     secondary: colors.orange.base,
     "on-secondary": colors.shades.white,
-    success: colors.green.accent2,
+    success: colors.green.base,
     "on-success": colors.shades.white,
     info: colors.cyan.base,
     "on-info": colors.shades.white,
@@ -28,6 +28,12 @@ const lightTheme: ThemeDefinition = {
     error: colors.red.base,
     "on-error": colors.shades.white,
     background: colors.shades.white,
+
+    "nature-mood": colors.green.base,
+    "relax-mood": colors.cyan.base,
+    "history-mood": colors.amber.base,
+    "culture-mood": colors.orange.base,
+    "party-mood": colors.purple.base,
   },
 };
 

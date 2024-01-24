@@ -9,7 +9,7 @@ export const LOGIN = gql`
 `;
 
 export const CREATE_TRAVEL = gql`
-  mutation ($createTravelInput: CreateTravelInput) {
+  mutation ($createTravelInput: CreateTravelInput!) {
     createTravel(createTravelInput: $createTravelInput) {
       id
     }

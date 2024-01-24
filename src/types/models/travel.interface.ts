@@ -6,6 +6,7 @@ export interface Travel {
   slug: string;
   description: string;
   image: string;
+  isPublic: boolean;
   days: number;
   nights: number;
   cheapestTour: number;

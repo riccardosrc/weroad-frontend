@@ -5,7 +5,9 @@
  */
 
 // Composables
+import { authGetters } from "@/store/modules/auth";
 import { createRouter, createWebHistory } from "vue-router";
+import { useStore } from "vuex";
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -18,6 +20,14 @@ const router = createRouter({
       path: "/travels",
       name: "travels",
       component: () => import("@/pages/travels/travels.vue"),
+    },
+    {
+      path: "/travels/config",
+      name: "travel-config",
+      component: () => import("@/pages/travels/travel-config.vue"),
+      meta: {
+        restricted: true,
+      },
     },
     {
       path: "/travels/:slug",
@@ -40,6 +50,17 @@ const router = createRouter({
       redirect: "/travels",
     },
   ],
+});
+
+router.beforeEach((to) => {
+  return true;
+  const store = useStore();
+  const isAuth = store.getters[authGetters.isAuth];
+  const isRestrictedRoute = to.meta.restricted;
+  if (isRestrictedRoute && !isAuth) {
+    return { path: "/travels" };
+  }
+  return true;
 });
 
 export default router;
