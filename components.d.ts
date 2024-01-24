@@ -17,5 +17,6 @@ declare module 'vue' {
     TheHeader: typeof import('./src/components/layout/TheHeader.vue')['default']
     TravelCard: typeof import('./src/components/ui/TravelCard.vue')['default']
     TravelInformationCard: typeof import('./src/components/ui/TravelInformationCard.vue')['default']
+    TravelMoodFields: typeof import('./src/components/ui/TravelMoodFields.vue')['default']
   }
 }

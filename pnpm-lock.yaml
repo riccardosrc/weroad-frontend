@@ -14,6 +14,12 @@ dependencies:
   '@vue/apollo-composable':
     specifier: ^4.0.0
     version: 4.0.0(@apollo/client@3.8.10)(graphql@16.8.1)(typescript@5.3.3)(vue@3.4.15)
+  '@vuelidate/core':
+    specifier: ^2.0.3
+    version: 2.0.3(vue@3.4.15)
+  '@vuelidate/validators':
+    specifier: ^2.0.4
+    version: 2.0.4(vue@3.4.15)
   core-js:
     specifier: ^3.34.0
     version: 3.35.1
@@ -884,6 +890,32 @@ packages:
 
   /@vue/shared@3.4.15:
     resolution: {integrity: sha512-KzfPTxVaWfB+eGcGdbSf4CWdaXcGDqckoeXUh7SB3fZdEtzPCK2Vq9B/lRRL3yutax/LWITz+SwvgyOxz5V75g==}
+
+  /@vuelidate/core@2.0.3(vue@3.4.15):
+    resolution: {integrity: sha512-AN6l7KF7+mEfyWG0doT96z+47ljwPpZfi9/JrNMkOGLFv27XVZvKzRLXlmDPQjPl/wOB1GNnHuc54jlCLRNqGA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^2.0.0 || >=3.0.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.4.15(typescript@5.3.3)
+      vue-demi: 0.13.11(vue@3.4.15)
+    dev: false
+
+  /@vuelidate/validators@2.0.4(vue@3.4.15):
+    resolution: {integrity: sha512-odTxtUZ2JpwwiQ10t0QWYJkkYrfd0SyFYhdHH44QQ1jDatlZgTh/KRzrWVmn/ib9Gq7H4hFD4e8ahoo5YlUlDw==}
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^2.0.0 || >=3.0.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.4.15(typescript@5.3.3)
+      vue-demi: 0.13.11(vue@3.4.15)
+    dev: false
 
   /@vuetify/loader-shared@2.0.1(vue@3.4.15)(vuetify@3.5.1):
     resolution: {integrity: sha512-zy5/ohEO7RcJaWYu2Xiy8TBEOkTb42XvWvSAJwXAtY8OlwqyGhzzBp9OvMVjLGIuFXumBpXKlsaVIkeN0OWWSw==}
@@ -2973,6 +3005,21 @@ packages:
       sass: 1.70.0
     optionalDependencies:
       fsevents: 2.3.3
+
+  /vue-demi@0.13.11(vue@3.4.15):
+    resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.4.15(typescript@5.3.3)
+    dev: false
 
   /vue-demi@0.14.6(vue@3.4.15):
     resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}

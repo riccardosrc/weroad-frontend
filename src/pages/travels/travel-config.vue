@@ -3,26 +3,42 @@
 
   <v-form @submit.prevent="onSave()" :disabled="loading || isSaved">
     <v-text-field
+      :error-messages="formValidation.slug.$errors.map((e) => e.$message as string)"
+      @input="formValidation.slug.$touch"
+      @blur="formValidation.slug.$touch"
       variant="outlined"
       label="Slug"
       v-model="travelData.slug"
     ></v-text-field>
     <v-text-field
+      :error-messages="formValidation.name.$errors.map((e) => e.$message as string)"
+      @input="formValidation.name.$touch"
+      @blur="formValidation.name.$touch"
       variant="outlined"
       label="Name"
       v-model="travelData.name"
     ></v-text-field>
-    <v-text-field
+    <v-textarea
+      :error-messages="formValidation.description.$errors.map((e) => e.$message as string)"
+      @input="formValidation.description.$touch"
+      @blur="formValidation.description.$touch"
       variant="outlined"
       label="Descrtiption"
       v-model="travelData.description"
-    ></v-text-field>
+      :rows="3"
+    ></v-textarea>
     <v-text-field
+      :error-messages="formValidation.image.$errors.map((e) => e.$message as string)"
+      @input="formValidation.image.$touch"
+      @blur="formValidation.image.$touch"
       variant="outlined"
       label="Image Url"
       v-model="travelData.image"
     ></v-text-field>
     <v-text-field
+      :error-messages="formValidation.days.$errors.map((e) => e.$message as string)"
+      @input="formValidation.days.$touch"
+      @blur="formValidation.days.$touch"
       variant="outlined"
       type="number"
       label="Days"
@@ -34,52 +50,7 @@
       v-model="travelData.isPublic"
     ></v-switch>
 
-    <h2 class="mb-4">Mood values</h2>
-    <h3>Nature</h3>
-    <v-slider
-      thumb-label
-      :step="1"
-      :min="0"
-      :max="100"
-      v-model="travelData.mood.nature"
-      color="nature-mood"
-    ></v-slider>
-    <h3>Relax</h3>
-    <v-slider
-      thumb-label
-      :step="1"
-      :min="0"
-      :max="100"
-      v-model="travelData.mood.relax"
-      color="relax-mood"
-    ></v-slider>
-    <h3>History</h3>
-    <v-slider
-      thumb-label
-      :step="1"
-      :min="0"
-      :max="100"
-      v-model="travelData.mood.history"
-      color="history-mood"
-    ></v-slider>
-    <h3>Culture</h3>
-    <v-slider
-      thumb-label
-      :step="1"
-      :min="0"
-      :max="100"
-      v-model="travelData.mood.culture"
-      color="culture-mood"
-    ></v-slider>
-    <h3>Party</h3>
-    <v-slider
-      thumb-label
-      :step="1"
-      :min="0"
-      :max="100"
-      v-model="travelData.mood.party"
-      color="party-mood"
-    ></v-slider>
+    <TravelMoodFields :mood="travelData.mood" />
 
     <LoadingSpinner v-if="loading" />
     <v-alert v-if="error" color="error">{{ error.message }}</v-alert>
@@ -107,6 +78,15 @@ import { useMutation } from "@vue/apollo-composable";
 import { useRouter } from "vue-router";
 import LoadingSpinner from "@/components/ui/LoadingSpinner.vue";
 import { reactive } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import {
+  required,
+  url,
+  integer,
+  maxLength,
+  helpers,
+} from "@vuelidate/validators";
+import TravelMoodFields from "@/components/ui/TravelMoodFields.vue";
 
 const router = useRouter();
 
@@ -127,6 +107,24 @@ const travelData = reactive<CreateTravelInput>({
   },
 });
 
+const slugRule = helpers.withMessage(
+  "Value must contains only letters, numbers or dashes (-)",
+  helpers.regex(/^[a-zA-Z0-9-]+$/)
+);
+const formRules = {
+  name: { required, maxLength: maxLength(255) },
+  description: { required, maxLength: maxLength(255) },
+  slug: {
+    required,
+    maxLength: maxLength(255),
+    slugRule,
+  },
+  image: { required, url },
+  days: { required, integer },
+};
+
+const formValidation = useVuelidate(formRules, travelData);
+
 const {
   mutate: createTravel,
   loading,
@@ -145,7 +143,16 @@ onDone(() => {
 });
 
 const onSave = async () => {
+  if (formValidation.value.$invalid) {
+    return;
+  }
   await createTravel();
   isSaved.value = true;
 };
 </script>
+
+<style scoped>
+.v-text-field {
+  margin-bottom: 0.5rem;
+}
+</style>
