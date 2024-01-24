@@ -15,3 +15,11 @@ export const CREATE_TRAVEL = gql`
     }
   }
 `;
+
+export const DELETE_TRAVEL = gql`
+  mutation ($id: String!) {
+    deleteTravel(id: $id) {
+      message
+    }
+  }
+`;

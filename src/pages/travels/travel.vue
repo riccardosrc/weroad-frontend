@@ -6,6 +6,7 @@
       :image="travel.image"
       class="rounded-b-xl"
     />
+
     <v-container class="mt-6">
       <v-row justify="space-around">
         <TravelInformationCard
@@ -24,12 +25,15 @@
           :text="cheapestTourLabel"
         />
       </v-row>
+
       <v-row class="mt-6">
         <v-col>
           <h2>Travel Details</h2>
           <p>{{ travel.description }}</p>
         </v-col>
       </v-row>
+
+      <!-- Admin actions -->
       <v-row
         class="mt-6 ga-1"
         justify="end"
@@ -38,6 +42,11 @@
         <v-btn color="error" icon>
           <v-tooltip activator="parent" location="top"> Delete </v-tooltip>
           <v-icon>mdi-delete</v-icon>
+          <ConfirmationDialog
+            title="Delete Travel Confirmation"
+            message="Are you sure you want delete this travel and all its associated tours?"
+            @confirmatiom="onDeleteConfirmation"
+          />
         </v-btn>
         <v-btn color="secondary" icon>
           <v-tooltip activator="parent" location="top"> Edit </v-tooltip>
@@ -53,10 +62,11 @@
 
 <script setup lang="ts">
 import { Travel } from "@/types/models/travel.interface";
-import { useQuery } from "@vue/apollo-composable";
+import { useMutation, useQuery } from "@vue/apollo-composable";
 import { ref } from "vue";
 import { GET_TRAVEL_BY_SLUG } from "@/graphql/queries";
 import LoadingSpinner from "@/components/ui/LoadingSpinner.vue";
+import ConfirmationDialog from "@/components/ui/ConfirmationDialog.vue";
 import { PropertyWrapper } from "@/types/generics/property-wrapper.type";
 import ImageWithText from "@/components/ui/ImageWithText.vue";
 import TravelInformationCard from "@/components/ui/TravelInformationCard.vue";
@@ -64,10 +74,13 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 import { StoreState } from "@/store";
 import { authGetters } from "@/store/modules/auth";
+import { DELETE_TRAVEL } from "@/graphql/mutations";
+import { useRouter } from "vue-router";
 
 const { slug } = defineProps<{ slug: string }>();
 const travel = ref<Travel>();
 const store = useStore<StoreState>();
+const router = useRouter();
 
 const { loading, error, onResult } = useQuery<
   PropertyWrapper<"travelBySlug", Travel>
@@ -77,6 +90,20 @@ onResult(({ data }) => {
   console.log(data);
   travel.value = data?.travelBySlug ?? undefined;
 });
+
+const { mutate: deleteTravel } = useMutation(DELETE_TRAVEL, () => ({
+  variables: {
+    id: travel.value?.id,
+  },
+}));
+
+const onDeleteConfirmation = async (confirm: boolean) => {
+  if (!confirm) {
+    return;
+  }
+  await deleteTravel();
+  router.replace("/travels");
+};
 
 const daysNightsLabel = computed(() => {
   return `${travel.value?.days} / ${travel.value?.nights}`;
