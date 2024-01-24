@@ -30,6 +30,20 @@
           <p>{{ travel.description }}</p>
         </v-col>
       </v-row>
+      <v-row
+        class="mt-6 ga-1"
+        justify="end"
+        v-if="store.getters[authGetters.isAuth]"
+      >
+        <v-btn color="error" icon>
+          <v-tooltip activator="parent" location="top"> Delete </v-tooltip>
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+        <v-btn color="secondary" icon>
+          <v-tooltip activator="parent" location="top"> Edit </v-tooltip>
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+      </v-row>
     </v-container>
   </div>
   <v-alert v-else type="error">
@@ -47,9 +61,13 @@ import { PropertyWrapper } from "@/types/generics/property-wrapper.type";
 import ImageWithText from "@/components/ui/ImageWithText.vue";
 import TravelInformationCard from "@/components/ui/TravelInformationCard.vue";
 import { computed } from "vue";
+import { useStore } from "vuex";
+import { StoreState } from "@/store";
+import { authGetters } from "@/store/modules/auth";
 
 const { slug } = defineProps<{ slug: string }>();
 const travel = ref<Travel>();
+const store = useStore<StoreState>();
 
 const { loading, error, onResult } = useQuery<
   PropertyWrapper<"travelBySlug", Travel>

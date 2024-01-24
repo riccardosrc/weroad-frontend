@@ -6,11 +6,14 @@
         <h2 class="mb-4">Live our experiences.</h2>
       </div>
       <v-btn
-        icon="mdi-plus"
         color="secondary"
+        icon
         to="/travels/config"
         v-if="store.getters[authGetters.isAuth]"
-      ></v-btn>
+      >
+        <v-tooltip activator="parent" location="top"> Add </v-tooltip>
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
     </v-row>
   </v-container>
   <v-responsive>
