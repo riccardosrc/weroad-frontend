@@ -71,7 +71,7 @@
 
       <!-- Admin actions -->
       <v-row
-        class="mt-6 ga-1"
+        class="my-12 ga-1"
         justify="end"
         v-if="store.getters[authGetters.isAuth]"
       >
