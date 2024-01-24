@@ -27,10 +27,46 @@
       </v-row>
 
       <v-row class="mt-6">
-        <v-col>
+        <div>
           <h2>Travel Details</h2>
           <p>{{ travel.description }}</p>
-        </v-col>
+        </div>
+      </v-row>
+
+      <v-row class="mt-6">
+        <h2>Travel Mood</h2>
+      </v-row>
+      <v-row justify="space-around" class="mt-6">
+        <MoodIndicator
+          color="nature-mood"
+          icon="mdi-image-filter-hdr"
+          label="Nature"
+          :value="travel.mood.nature"
+        />
+        <MoodIndicator
+          color="relax-mood"
+          icon="mdi-pool"
+          label="Relax"
+          :value="travel.mood.relax"
+        />
+        <MoodIndicator
+          color="history-mood"
+          icon="mdi-temple-buddhist"
+          label="History"
+          :value="travel.mood.history"
+        />
+        <MoodIndicator
+          color="culture-mood"
+          icon="mdi-library"
+          label="Culture"
+          :value="travel.mood.culture"
+        />
+        <MoodIndicator
+          color="party-mood"
+          icon="mdi-party-popper"
+          label="Party"
+          :value="travel.mood.party"
+        />
       </v-row>
 
       <!-- Admin actions -->
@@ -76,6 +112,7 @@ import { StoreState } from "@/store";
 import { authGetters } from "@/store/modules/auth";
 import { DELETE_TRAVEL } from "@/graphql/mutations";
 import { useRouter } from "vue-router";
+import MoodIndicator from "@/components/ui/MoodIndicator.vue";
 
 const { slug } = defineProps<{ slug: string }>();
 const travel = ref<Travel>();

@@ -31,6 +31,13 @@ export const GET_TRAVEL_BY_SLUG = gql`
       nights
       cheapestTour
       firstAvailableDate
+      mood {
+        nature
+        culture
+        history
+        relax
+        party
+      }
     }
   }
 `;

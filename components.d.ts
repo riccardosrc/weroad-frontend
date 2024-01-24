@@ -11,6 +11,7 @@ declare module 'vue' {
     copy: typeof import('./src/components/layout/TheHeader copy.vue')['default']
     ImageWithText: typeof import('./src/components/ui/ImageWithText.vue')['default']
     LoadingSpinner: typeof import('./src/components/ui/LoadingSpinner.vue')['default']
+    MoodIndicator: typeof import('./src/components/ui/MoodIndicator.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheFooter: typeof import('./src/components/layout/TheFooter.vue')['default']
