@@ -63,3 +63,22 @@ export const GET_TOURS = gql`
     }
   }
 `;
+
+export const GET_TOUR_BY_ID = gql`
+  query ($id: String!) {
+    tour(id: $id) {
+      id
+      name
+      price
+      startDate
+      endDate
+      travel {
+        id
+        name
+        slug
+        days
+        nights
+      }
+    }
+  }
+`;

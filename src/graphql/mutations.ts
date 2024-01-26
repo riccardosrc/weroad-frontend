@@ -23,3 +23,19 @@ export const DELETE_TRAVEL = gql`
     }
   }
 `;
+
+export const CREATE_TOUR = gql`
+  mutation ($createTourInput: CreateTourInput!) {
+    createTour(createTourInput: $createTourInput) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_TOUR = gql`
+  mutation ($id: String!, $updateTourInput: UpdateTourInput!) {
+    updateTour(id: $id, updateTourInput: $updateTourInput) {
+      id
+    }
+  }
+`;

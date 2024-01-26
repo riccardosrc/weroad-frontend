@@ -41,6 +41,23 @@ const router = createRouter({
       component: () => import("@/pages/tours/tours.vue"),
     },
     {
+      path: "/tours/config",
+      name: "tour-config",
+      component: () => import("@/pages/tours/tour-config.vue"),
+      meta: {
+        restricted: true,
+      },
+    },
+    {
+      path: "/tours/:tourId/config",
+      name: "tour-config",
+      props: true,
+      component: () => import("@/pages/tours/tour-config.vue"),
+      meta: {
+        restricted: true,
+      },
+    },
+    {
       path: "/login",
       name: "login",
       component: () => import("@/pages/auth/login.vue"),

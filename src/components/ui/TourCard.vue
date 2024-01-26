@@ -14,6 +14,10 @@
             {{ tour.price }}€
           </h2>
           <v-btn color="secondary">Book Now</v-btn>
+          <v-btn color="secondary" icon :to="tourConfigLink" v-if="isAdmin">
+            <v-tooltip activator="parent" location="top"> Edit </v-tooltip>
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
         </v-row>
       </v-container>
     </v-card-text>
@@ -22,12 +26,15 @@
 
 <script setup lang="ts">
 import { Tour } from "@/types/models/tour.interface";
+import { computed } from "vue";
 
-const { tour } = defineProps<{ tour: Tour }>();
+const { tour } = defineProps<{ tour: Tour; isAdmin: boolean }>();
 
 const tourDate = (date: Date) =>
   new Date(date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
   });
+
+const tourConfigLink = computed(() => `/tours/${tour.id}/config`);
 </script>

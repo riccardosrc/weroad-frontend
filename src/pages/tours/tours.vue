@@ -15,6 +15,7 @@
         :tour="tour"
         :key="tour.id"
         class="my-4"
+        :is-admin="store.getters[authGetters.isAuth]"
       />
       <v-pagination
         v-model="page"
@@ -35,6 +36,9 @@ import { Tour } from "@/types/models/tour.interface";
 import { ref } from "vue";
 import { PropertyWrapper } from "@/types/generics/property-wrapper.type";
 import TourCard from "@/components/ui/TourCard.vue";
+import { StoreState } from "@/store";
+import { useStore } from "vuex";
+import { authGetters } from "@/store/modules/auth";
 
 type GetToursType = PropertyWrapper<"tours", PaginatedRes<Tour>>;
 
@@ -42,6 +46,8 @@ const tours = ref<Tour[]>([]);
 const page = ref(1);
 const totalPages = ref(0);
 const pageSize = ref(5);
+
+const store = useStore<StoreState>();
 
 const { loading, error, onResult } = useQuery<GetToursType>(GET_TOURS, () => ({
   offset: (page.value - 1) * pageSize.value,
