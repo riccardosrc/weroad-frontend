@@ -84,9 +84,9 @@
             @confirmatiom="onDeleteConfirmation"
           />
         </v-btn>
-        <v-btn color="secondary" icon>
-          <v-tooltip activator="parent" location="top"> Edit </v-tooltip>
-          <v-icon>mdi-pencil</v-icon>
+        <v-btn color="secondary" icon :to="newTourRoute">
+          <v-tooltip activator="parent" location="top"> Add Tour </v-tooltip>
+          <v-icon>mdi-calendar-plus</v-icon>
         </v-btn>
       </v-row>
     </v-container>
@@ -158,4 +158,6 @@ const firstAvailableDateLabel = computed(() => {
 const cheapestTourLabel = computed(() => {
   return travel.value?.cheapestTour?.toString() ?? "N/A";
 });
+
+const newTourRoute = computed(() => `/travels/${travel.value?.slug}/add-tour`);
 </script>

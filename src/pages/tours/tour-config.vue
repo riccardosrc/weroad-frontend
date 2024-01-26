@@ -45,7 +45,7 @@
     <v-alert v-if="isSaved" type="success"
       >Tour saved successfully, you will be redirected in few seconds</v-alert
     >
-    <v-container class="my-6" v-if="!isWaitingAction || !isSaved">
+    <v-container class="my-6" v-if="!isWaitingAction && !isSaved">
       <v-row justify="end" class="ga-1">
         <v-btn type="button" variant="text" color="error" to="/travels"
           >Cancel</v-btn
@@ -59,7 +59,7 @@
 <script setup lang="ts">
 import { Tour } from "@/types/models/tour.interface";
 import { CREATE_TOUR, UPDATE_TOUR } from "@/graphql/mutations";
-import { GET_TOUR_BY_ID } from "@/graphql/queries";
+import { GET_TOUR_BY_ID, GET_TRAVEL_BY_SLUG } from "@/graphql/queries";
 import { ref } from "vue";
 import { PropertyWrapper } from "@/types/generics/property-wrapper.type";
 import { useLazyQuery, useMutation } from "@vue/apollo-composable";
@@ -71,9 +71,13 @@ import { required, maxLength } from "@vuelidate/validators";
 import { Utils } from "@/shared/utils";
 import { onMounted } from "vue";
 import { computed } from "vue";
+import { Travel } from "@/types/models/travel.interface";
 
 const router = useRouter();
-const { tourId } = defineProps<{ tourId?: string }>();
+const { tourId, travelSlug } = defineProps<{
+  tourId?: string;
+  travelSlug?: string;
+}>();
 
 const isSaved = ref(false);
 const isInitialized = ref(false);
@@ -95,12 +99,16 @@ const formRules = {
 };
 const formValidation = useVuelidate(formRules, tourData as any);
 
-const {
-  load,
-  onResult: onLoadedTour,
-  loading: loadingTour,
-} = useLazyQuery<PropertyWrapper<"tour", Tour>>(GET_TOUR_BY_ID, {
+const { load: loadTour, onResult: onLoadedTour } = useLazyQuery<
+  PropertyWrapper<"tour", Tour>
+>(GET_TOUR_BY_ID, {
   id: tourId,
+});
+
+const { load: loadTravel, onResult: onLoadedTravel } = useLazyQuery<
+  PropertyWrapper<"travelBySlug", Travel>
+>(GET_TRAVEL_BY_SLUG, {
+  slug: travelSlug,
 });
 
 onLoadedTour((tour) => {
@@ -117,13 +125,29 @@ onLoadedTour((tour) => {
   isInitialized.value = true;
 });
 
+onLoadedTravel((travel) => {
+  const { data } = travel;
+  console.log(data);
+  if (!data) {
+    return;
+  }
+  tourData.travelId = data.travelBySlug.id;
+  tourData.travelName = data.travelBySlug.name;
+  isInitialized.value = true;
+});
+
 const {
   mutate: createTour,
   loading: loadingCreate,
   error,
 } = useMutation<PropertyWrapper<"createTour", Tour>>(CREATE_TOUR, () => ({
   variables: {
-    createTourInput: { ...tourData, price: +tourData.price * 100 },
+    createTourInput: {
+      name: tourData.name,
+      travelId: tourData.travelId,
+      startDate: Utils.dateToISO8601(tourData.startDate),
+      price: +tourData.price * 100,
+    },
   },
 }));
 
@@ -159,11 +183,12 @@ const onSave = async () => {
 };
 
 onMounted(async () => {
-  if (!tourId) {
-    isInitialized.value = true;
-    return;
+  if (tourId) {
+    await loadTour();
   }
-  await load();
+  if (travelSlug) {
+    await loadTravel();
+  }
 });
 </script>
 

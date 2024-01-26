@@ -36,17 +36,18 @@ const router = createRouter({
       component: () => import("@/pages/travels/travel.vue"),
     },
     {
-      path: "/tours",
-      name: "tours",
-      component: () => import("@/pages/tours/tours.vue"),
-    },
-    {
-      path: "/tours/config",
-      name: "tour-config",
+      path: "/travels/:travelSlug/add-tour",
+      name: "add-tour",
+      props: true,
       component: () => import("@/pages/tours/tour-config.vue"),
       meta: {
         restricted: true,
       },
+    },
+    {
+      path: "/tours",
+      name: "tours",
+      component: () => import("@/pages/tours/tours.vue"),
     },
     {
       path: "/tours/:tourId/config",
